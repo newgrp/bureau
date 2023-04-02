@@ -1,3 +1,4 @@
+mod intern;
 mod pointer;
 
 use core::ops::Deref;
