@@ -15,7 +15,7 @@
 /// An interner for values of type `T`.
 ///
 /// `Interner` only specifies the ID type and a method to recover values from IDs. The
-/// [`InternerFrom`] and [`InternerFromIterator`] subtraits provide methods to intern new values.
+/// [`InternFrom`] and [`InternFromIterator`] subtraits provide methods to intern new values.
 pub trait Interner<T: Eq + ?Sized> {
     /// The ID type used by this interner.
     type Id: Clone + Eq;
@@ -31,9 +31,9 @@ pub trait Interner<T: Eq + ?Sized> {
 
 /// Interns `T` values constructed from "seed" values of type `S`.
 ///
-/// The seed type allows broad generic implementations of `InternerFrom`. This is especially useful
+/// The seed type allows broad generic implementations of `InternFrom`. This is especially useful
 /// for interning unsized types, which can't be passed directly by value.
-pub trait InternerFrom<T: Eq + ?Sized, S>: Interner<T> {
+pub trait InternFrom<T: Eq + ?Sized, S>: Interner<T> {
     /// Interns a `T` value constructed from the seed.
     fn intern(&self, seed: S) -> Self::Id;
 }
@@ -41,8 +41,8 @@ pub trait InternerFrom<T: Eq + ?Sized, S>: Interner<T> {
 /// Interns `[T]` slices constructed from iterators.
 ///
 /// See [`super::AllocatorFromIterator`] for an explanation of why this trait is separate from
-/// [`InternerFrom`].
-pub trait InternerFromIterator<T: Eq>: Interner<[T]> {
+/// [`InternFrom`].
+pub trait InternFromIterator<T: Eq>: Interner<[T]> {
     /// Interns a `[T]` slice constructed from the iterator.
     fn intern_from_iter(&self, iter: impl IntoIterator<Item = T>) -> Self::Id;
 }
