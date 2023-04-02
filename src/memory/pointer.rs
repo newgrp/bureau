@@ -23,10 +23,20 @@ use core::{
 ///
 /// # Zero-sized types (ZSTs)
 ///
-/// ZSTs are generally allocated with [`NonNull::dangling()`](core::ptr::NonNull::dangling), which
-/// always returns the same pointer value. As such `ByAddress` pointers to ZSTs will usually all be
-/// considered equal, which is usually what the user wants anyway. If you want to be able to
-/// distinguish between different instances of a ZST, do not use `ByAddress`.
+/// ZSTs are generally allocated with [`NonNull::dangling()`](ptr::NonNull), which always returns
+/// the same pointer value. As such `ByAddress` pointers to ZSTs will usually all be/ considered
+/// equal, which is usually what the user wants anyway. If you want to be able to distinguish
+/// between different instances of a ZST, do not use `ByAddress`.
+///
+/// # Trait objects (i.e., `dyn Trait`)
+///
+/// Using `ByAddress` with trait object pointers (i.e., `dyn Trait`) is ill-advised. As discussed in
+/// the [`std::ptr::eq`] docs:
+///
+/// > Comparing trait object pointers (`*const dyn Trait`) is unreliable: pointers to values of the
+///   same underlying type can compare inequal (because vtables are duplicated in multiple codegen
+///   units), and pointers to values of *different* underlying type can compare equal (since
+///   identical vtables can be deduplicated within a codegen unit).
 ///
 /// # No `Borrow` implementation
 ///
