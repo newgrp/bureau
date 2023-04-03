@@ -3,4 +3,13 @@ name = "bureau"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = ["std"]
+std = []
+
 [dependencies]
+dashmap = { version = "5.4", features = ["raw-api"] }
+
+[dev-dependencies]
+parking_lot = "0.12"
+rand = "0.8.5"
