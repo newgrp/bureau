@@ -51,15 +51,8 @@ pub trait InternFrom<T: Eq + ?Sized, S>: Interner<T> {
     fn intern(&self, seed: S) -> Self::Id;
 }
 
-/// Interns `[T]` slices constructed from iterators.
-///
-/// See [`super::AllocatorFromIterator`] for an explanation of why this trait is separate from
-/// [`InternFrom`].
-pub trait InternFromIterator<T: Eq>: Interner<[T]> {
-    /// Interns a `[T]` slice constructed from the iterator.
-    fn intern_from_iter(&self, iter: impl IntoIterator<Item = T>) -> Self::Id;
-}
-
+/// Tests that the values fed into an interner are deduplicated. Compares IDs after passing them
+/// through the given function.
 #[cfg(test)]
 pub(crate) fn uniqueness_test<I: Default + InternFrom<u8, u8>, K>(f: impl Fn(I::Id) -> K)
 where
@@ -81,6 +74,8 @@ where
     }
 }
 
+/// Tests that the values fed into an interner are deduplicated even when interned from multiple
+/// threads. Compares IDs after passing them through the given function.
 #[cfg(test)]
 pub(crate) fn multithreaded_test<I: 'static + Default + InternFrom<u8, u8> + Send + Sync, K>(
     f: impl 'static + Clone + Fn(I::Id) -> K + Send,
