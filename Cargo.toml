@@ -4,12 +4,15 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-default = ["std"]
+default = ["std", "unstable-ptr-metadata"]
 std = []
+unstable-ptr-metadata = []
 
 [dependencies]
 dashmap = { version = "5.4", features = ["raw-api"] }
+hashbrown = { version = "0.12.3", features = ["raw"] }
 
 [dev-dependencies]
+once_cell = "1.17"
 parking_lot = "0.12"
 rand = "0.8.5"

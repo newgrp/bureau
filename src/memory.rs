@@ -4,7 +4,11 @@ mod pointer;
 use core::ops::Deref;
 
 use alloc::{boxed::Box, rc::Rc, sync::Arc};
-pub use intern::{shared::SharedInterner, InternFrom, Interner};
+pub use intern::{
+    arc::{Arctern, Arcterner},
+    shared::SharedInterner,
+    InternFrom, Interner,
+};
 pub use pointer::ByAddress;
 
 /// An allocator for `T` values that returns pointers of a particular type.

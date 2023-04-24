@@ -12,6 +12,7 @@
 //! interns [quadtree](https://en.wikipedia.org/wiki/Quadtree) nodes to optimize
 //! [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
+pub mod arc;
 pub mod shared;
 
 #[cfg(test)]
